@@ -6,5 +6,5 @@ class Test():
   def test(self):
     print('Hello world!')
 
-def fn():
+def function():
   print('Function is ok.')
