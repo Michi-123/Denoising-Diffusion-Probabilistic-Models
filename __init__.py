@@ -1,3 +1,3 @@
 import sys
-sys.path.append('./')
-from .src import *
+sys.path.append('.')
+from ./src import *
