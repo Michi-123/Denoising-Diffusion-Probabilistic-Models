@@ -15,7 +15,8 @@ class DMFunctions():
 
         # βスケジュールの設定
         if scheduler == None:
-            self.betas = torch.linspace(0.0001, 0.02, timesteps) # 線形
+            # デフォルトは線形スケジューリング
+            self.betas = torch.linspace(0.0001, 0.02, timesteps)
         else:
             self.betas = scheduler
         
