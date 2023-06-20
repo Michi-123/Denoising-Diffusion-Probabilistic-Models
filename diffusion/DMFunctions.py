@@ -10,7 +10,7 @@ import torch
 import torch.nn.functional as F
 from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
 
-import Scheduler
+from . Scheduler import Scheduler
 
 class DMFunctions():
     def __init__(self, timesteps):
