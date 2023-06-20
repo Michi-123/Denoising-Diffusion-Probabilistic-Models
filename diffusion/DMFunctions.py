@@ -11,7 +11,7 @@ import torch.nn.functional as F
 from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
 
 class DMFunctions():
-    def __init__(self, timesteps, scheduler=None):
+    def __init__(self, timesteps=1, scheduler=None):
 
         # βスケジュールの設定
         if scheduler == None:
