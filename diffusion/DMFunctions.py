@@ -1,8 +1,7 @@
 """ Functions.py """
 #@title Functions
 
-# reverse_transform
-
+# xxx
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -42,10 +41,11 @@ class DMFunctions():
 
 
     # @title 画像の表示の定義
-    def plot(self, x_noisy, t):
+    def plot(self, x_noisy, t=None):
         noisy_image = self.reverse_transform(x_noisy)
-        text = "Step:" + str(t)
-        plt.text(5, 20, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
+        if t:
+            text = "Step:" + str(t)
+            plt.text(5, 20, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
         plt.imshow(noisy_image)
         plt.show()
 
@@ -144,11 +144,15 @@ class DMFunctions():
 
         t = torch.tensor([t])
         noise = torch.randn_like(x_start)
-        #
+
+        # 元画像の強さ
         sqrt_alphas_cumprod_t = self.extract(self.sqrt_alphas_cumprod, t, x_start.shape)
+
+        # ノイズの強さ
         sqrt_one_minus_alphas_cumprod_t = self.extract(
             self.sqrt_one_minus_alphas_cumprod, t, x_start.shape
         )
+
         if mode == 1:
             # 検証（元画像の強さ）
             q = sqrt_alphas_cumprod_t * x_start
@@ -156,6 +160,7 @@ class DMFunctions():
             # 検証（ノイズの強さ）
             q = sqrt_one_minus_alphas_cumprod_t * noise
         else:
+            # 崩壊画像
             q = sqrt_alphas_cumprod_t * x_start + sqrt_one_minus_alphas_cumprod_t * noise
 
             self.noise_list.append(noise)
