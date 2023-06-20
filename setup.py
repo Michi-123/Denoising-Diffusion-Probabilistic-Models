@@ -12,17 +12,17 @@ with open(os.path.join(current_path, 'README.md'), encoding='utf-8') as f:
 setup(
     name='simple_othello', 
     packages=find_packages(exclude=('*.pyc',)),
-    version='1.2.5',
+    version='0.0.0',
     license='MIT', 
     install_requires=[],
     author='Michiyasu Uchiyama',
-    description='simple_othello', 
+    description='Denoising Diffusion Probabilistic Models', 
     long_description=long_description,
     long_description_content_type='text/markdown', 
-    keywords='simple_othello othello reversi', 
+    keywords='Denoising Diffusion Probabilistic Models', 
 
     classifiers=[
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.10',
     ],
 )
