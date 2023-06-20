@@ -12,6 +12,7 @@ import torch
 from torch import nn, einsum
 import torch.nn.functional as F
 
+# from .DMFunctions import DMFunctions
 
 def exists(x):
     return x is not None
@@ -35,7 +36,6 @@ class SinusoidalPositionEmbeddings(nn.Module):
     def __init__(self, dim):
         super().__init__()
         self.dim = dim
-        self.fn = Functions(10)
 
     def forward(self, time):
         device = time.device
