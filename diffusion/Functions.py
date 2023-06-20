@@ -183,3 +183,8 @@ class Functions():
             Lambda(lambda t: (t * 2) - 1),
         ])
 
+    def reverse_transform(self, im):
+        im = im.squeeze().numpy().transpose(1, 2, 0)
+        im = (im + 1.0) / 2 * 255
+        im = im.astype(np.uint8)
+        return im
