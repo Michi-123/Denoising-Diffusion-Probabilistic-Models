@@ -45,7 +45,7 @@ class DMFunctions():
         noisy_image = self.reverse_transform(x_noisy)
         if t:
             text = "Step:" + str(t)
-            plt.text(5, 20, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
+            plt.text(0, 0, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
         plt.imshow(noisy_image)
         plt.show()
 
