@@ -30,19 +30,29 @@ class Functions():
         im = im.astype(np.uint8)
         return im
 
+# @title サンプリングの定義
+def q_sample(x_start, t, mode=None):
+    """ mode:確認モードの種類 """
 
-    # forward diffusion (using the nice property)
-    def q_sample(self, x_start, t, mode=None):
-        """ mode:確認モードの種類 """
-        if noise is None:
-            noise = torch.randn_like(x_start)
+    t = torch.tensor([t])
+    noise = torch.randn_like(x_start)
+    #
+    sqrt_alphas_cumprod_t = extract(sqrt_alphas_cumprod, t, x_start.shape)
+    sqrt_one_minus_alphas_cumprod_t = extract(
+        sqrt_one_minus_alphas_cumprod, t, x_start.shape
+    )
+    if mode == 1:
+        # 検証（元画像の強さ）
+        q = sqrt_alphas_cumprod_t * x_start
+    elif mode == 2:
+        # 検証（ノイズの強さ）
+        q = sqrt_one_minus_alphas_cumprod_t * noise
+    else:
+        q = sqrt_alphas_cumprod_t * x_start + sqrt_one_minus_alphas_cumprod_t * noise
 
-        sqrt_alphas_cumprod_t = self.extract(self.sqrt_alphas_cumprod, t, x_start.shape)
-        sqrt_one_minus_alphas_cumprod_t = self.extract(
-            self.sqrt_one_minus_alphas_cumprod, t, x_start.shape
-        )
+        noise_list.append(noise)
 
-        return sqrt_alphas_cumprod_t * x_start + sqrt_one_minus_alphas_cumprod_t * noise
+    return q
 
 
     # @title 画像の表示の定義
