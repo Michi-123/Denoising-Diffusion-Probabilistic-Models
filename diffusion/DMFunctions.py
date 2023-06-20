@@ -41,10 +41,10 @@ class DMFunctions():
 
 
     # @title 画像の表示の定義
-    def plot(self, x_noisy, t=None):
+    def plot(self, x_noisy, timestep=None):
         noisy_image = self.reverse_transform(x_noisy)
-        if t:
-            text = "Step:" + str(t)
+        if timestep:
+            text = "Step:" + str(timestep)
             plt.text(0, 0, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
         plt.axis('off')
         plt.imshow(noisy_image)
