@@ -32,7 +32,8 @@ class Functions():
 
 
     # forward diffusion (using the nice property)
-    def q_sample(self, x_start, t, noise=None):
+    def q_sample(self, x_start, t, mode=None):
+        """ mode:確認モードの種類 """
         if noise is None:
             noise = torch.randn_like(x_start)
 
