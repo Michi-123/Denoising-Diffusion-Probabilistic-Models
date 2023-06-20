@@ -184,7 +184,7 @@ class DMFunctions():
         ])
 
 
-    def transforms(examples):
+    def transforms(self, examples):
        examples["pixel_values"] = [transform(image.convert("L")) for image in examples["image"]]
        del examples["image"]
     
