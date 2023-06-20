@@ -46,6 +46,9 @@ class DMFunctions():
         if t:
             text = "Step:" + str(t)
             plt.text(0, 0, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
+        ax = plt.gca()
+        ax.axes.xaxis.set_visible(False)
+        ax.axes.yaxis.set_visible(False
         plt.imshow(noisy_image)
         plt.show()
 
