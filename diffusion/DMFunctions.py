@@ -17,9 +17,9 @@ class DMFunctions():
 
         self.betas = torch.linspace(0.0001, 0.02, timesteps)
         self.alphas = 1. - self.betas
-        self.alphas_cumprod = torch.cumprod(self.alphas, axis=0)
-        self.sqrt_alphas_cumprod = torch.sqrt(self.alphas_cumprod)
-        self.sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - self.alphas_cumprod)
+        self.alphas_cumprod = torch.cumprod(self.alphas, axis=0) # 累積積
+        self.sqrt_alphas_cumprod = torch.sqrt(self.alphas_cumprod) # 累積積の平方根
+        self.sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - self.alphas_cumprod) # 累積積の平方根の補数
         self.noise_list = []
 
     def test(self):
