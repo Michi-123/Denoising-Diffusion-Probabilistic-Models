@@ -13,16 +13,16 @@ from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, Center
 from . Scheduler import Scheduler
 
 class DMFunctions():
-    def __init__(self, timesteps):
-
-        scheduler = Scheduler()
-        
-        self.timesteps = timesteps #300 # 1000
+    def __init__(self, timesteps, scheduler=None):
 
         # βスケジュールの設定
-        #self.betas = torch.linspace(0.0001, 0.02, timesteps) # 線形
-        self.betas = scheduler.cosine_beta_schedule(timesteps) # コサイン
+        if scheduler:
+            self.betas = scheduler
+        else:
+            scheduler = Scheduler()
+            self.betas = torch.linspace(0.0001, 0.02, timesteps) # 線形
         
+        self.timesteps = timesteps #300 # 1000
         self.alphas = 1. - self.betas
         self.alphas_cumprod = torch.cumprod(self.alphas, axis=0) # 累積積
         self.sqrt_alphas_cumprod = torch.sqrt(self.alphas_cumprod) # 累積積の平方根
