@@ -173,3 +173,13 @@ class Functions():
         plt.text(5, 20, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
         plt.imshow(noisy_image)
         plt.show()
+
+    # 画像を指定のサイズに切り取って、値域を0-255から -1.0 - +1.0 に変換
+    def transform(self, image_size):
+        return Compose([
+            Resize(image_size),
+            CenterCrop(image_size),
+            ToTensor(),
+            Lambda(lambda t: (t * 2) - 1),
+        ])
+
