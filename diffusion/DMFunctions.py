@@ -1,13 +1,17 @@
 """ Functions.py """
 #@title Functions
 
+# reverse_transform
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm.auto import tqdm
 import torch
 import torch.nn.functional as F
+from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
 
-class Functions():
+class DMFunctions():
     def __init__(self, timesteps):    
 
         self.timesteps = timesteps #300 # 1000
@@ -17,6 +21,12 @@ class Functions():
         self.alphas_cumprod = torch.cumprod(self.alphas, axis=0)
         self.sqrt_alphas_cumprod = torch.sqrt(self.alphas_cumprod)
         self.sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - self.alphas_cumprod)
+        self.noise_list = []
+
+    def test(self):
+        print('Test2')
+
+
 
     def extract(self, a, t, x_shape):
         batch_size = t.shape[0]
@@ -30,33 +40,9 @@ class Functions():
         im = im.astype(np.uint8)
         return im
 
-# @title サンプリングの定義
-def q_sample(x_start, t, mode=None):
-    """ mode:確認モードの種類 """
-
-    t = torch.tensor([t])
-    noise = torch.randn_like(x_start)
-    #
-    sqrt_alphas_cumprod_t = extract(sqrt_alphas_cumprod, t, x_start.shape)
-    sqrt_one_minus_alphas_cumprod_t = extract(
-        sqrt_one_minus_alphas_cumprod, t, x_start.shape
-    )
-    if mode == 1:
-        # 検証（元画像の強さ）
-        q = sqrt_alphas_cumprod_t * x_start
-    elif mode == 2:
-        # 検証（ノイズの強さ）
-        q = sqrt_one_minus_alphas_cumprod_t * noise
-    else:
-        q = sqrt_alphas_cumprod_t * x_start + sqrt_one_minus_alphas_cumprod_t * noise
-
-        noise_list.append(noise)
-
-    return q
-
 
     # @title 画像の表示の定義
-    def plot(self, x_noisy):
+    def plot(self, x_noisy, t):
         noisy_image = self.reverse_transform(x_noisy)
         text = "Step:" + str(t)
         plt.text(5, 20, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
@@ -172,30 +158,16 @@ def q_sample(x_start, t, mode=None):
         else:
             q = sqrt_alphas_cumprod_t * x_start + sqrt_one_minus_alphas_cumprod_t * noise
 
-            noise_list.append(noise)
+            self.noise_list.append(noise)
 
         return q
 
 
-    # @title 画像の表示の定義
-    def plot(self, x_noisy):
-        noisy_image = self.reverse_transform(x_noisy)
-        text = "Step:" + str(t)
-        plt.text(5, 20, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
-        plt.imshow(noisy_image)
-        plt.show()
-
     # 画像を指定のサイズに切り取って、値域を0-255から -1.0 - +1.0 に変換
-    def transform(self, image_size):
+    def transform_(self, image_size):
         return Compose([
             Resize(image_size),
             CenterCrop(image_size),
             ToTensor(),
             Lambda(lambda t: (t * 2) - 1),
         ])
-
-    def reverse_transform(self, im):
-        im = im.squeeze().numpy().transpose(1, 2, 0)
-        im = (im + 1.0) / 2 * 255
-        im = im.astype(np.uint8)
-        return im
