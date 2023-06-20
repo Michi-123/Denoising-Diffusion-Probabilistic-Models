@@ -1,4 +1,7 @@
 # @title Scheduler
+
+import torch
+
 class Scheduler():
 
     def cosine_beta_schedule(self, timesteps, s=0.008):
