@@ -10,12 +10,19 @@ import torch
 import torch.nn.functional as F
 from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
 
-class DMFunctions():
-    def __init__(self, timesteps):    
+import Scheduler
 
+class DMFunctions():
+    def __init__(self, timesteps):
+
+        scheduler = Scheduler()
+        
         self.timesteps = timesteps #300 # 1000
 
-        self.betas = torch.linspace(0.0001, 0.02, timesteps)
+        # βスケジュールの設定
+        #self.betas = torch.linspace(0.0001, 0.02, timesteps) # 線形
+        self.betas = scheduler.cosine_beta_schedule(timesteps) # コサイン
+        
         self.alphas = 1. - self.betas
         self.alphas_cumprod = torch.cumprod(self.alphas, axis=0) # 累積積
         self.sqrt_alphas_cumprod = torch.sqrt(self.alphas_cumprod) # 累積積の平方根
