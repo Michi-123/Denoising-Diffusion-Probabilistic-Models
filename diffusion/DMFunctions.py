@@ -14,10 +14,10 @@ class DMFunctions():
     def __init__(self, timesteps, scheduler=None):
 
         # βスケジュールの設定
-        if scheduler:
-            self.betas = scheduler
-        else:
+        if scheduler == None:
             self.betas = torch.linspace(0.0001, 0.02, timesteps) # 線形
+        else:
+            self.betas = scheduler
         
         self.timesteps = timesteps #300 # 1000
         self.alphas = 1. - self.betas
