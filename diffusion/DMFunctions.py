@@ -182,3 +182,10 @@ class DMFunctions():
             ToTensor(),
             Lambda(lambda t: (t * 2) - 1),
         ])
+
+
+    def transforms(examples):
+       examples["pixel_values"] = [transform(image.convert("L")) for image in examples["image"]]
+       del examples["image"]
+    
+       return examples
