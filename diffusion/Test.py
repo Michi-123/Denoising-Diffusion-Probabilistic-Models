@@ -1,10 +1,10 @@
 print('Test')
 class Test():
   def __init__(self):
-    print('Test1')
+    pass
 
   def test(self):
-    print('Test2')
+    print('Hello world!')
 
-def f1():
-  print('test f1')
+def fn():
+  print('Function is ok.')
