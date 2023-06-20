@@ -10,8 +10,6 @@ import torch
 import torch.nn.functional as F
 from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
 
-from . Scheduler import Scheduler
-
 class DMFunctions():
     def __init__(self, timesteps, scheduler=None):
 
@@ -19,7 +17,6 @@ class DMFunctions():
         if scheduler:
             self.betas = scheduler
         else:
-            scheduler = Scheduler()
             self.betas = torch.linspace(0.0001, 0.02, timesteps) # 線形
         
         self.timesteps = timesteps #300 # 1000
