@@ -10,7 +10,7 @@ with open(os.path.join(current_path, 'README.md'), encoding='utf-8') as f:
 
 
 setup(
-    name='Denoising-Diffusion-Probabilistic-Models', 
+    name='Denoising_Diffusion_Probabilistic_Models', 
     packages=find_packages(exclude=('*.pyc',)),
     version='0.0.0.1',
     license='MIT', 
