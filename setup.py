@@ -10,7 +10,7 @@ with open(os.path.join(current_path, 'README.md'), encoding='utf-8') as f:
 
 
 setup(
-    name='simple_othello', 
+    name='Denoising_Diffusion_Probabilistic_Models', 
     packages=find_packages(exclude=('*.pyc',)),
     version='0.0.0',
     license='MIT', 
@@ -19,7 +19,7 @@ setup(
     description='Denoising Diffusion Probabilistic Models', 
     long_description=long_description,
     long_description_content_type='text/markdown', 
-    keywords='Denoising Diffusion Probabilistic Models', 
+    keywords='c', 
 
     classifiers=[
         'License :: OSI Approved :: MIT License',
