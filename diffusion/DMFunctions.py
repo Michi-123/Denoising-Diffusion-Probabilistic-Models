@@ -26,7 +26,7 @@ class DMFunctions():
         self.alphas = 1. - self.betas
         self.alphas_cumprod = torch.cumprod(self.alphas, axis=0) # 累積積
         self.alphas_cumprod_prev = F.pad(self.alphas_cumprod[:-1], (1, 0), value=1.0)
-        self.sqrt_recip_alphas = torch.sqrt(1.0 / alphas)
+        self.sqrt_recip_alphas = torch.sqrt(1.0 / self.alphas)
 
         # 拡散プロセス q(x_t | x_{t-1})等の計算
         self.sqrt_alphas_cumprod = torch.sqrt(self.alphas_cumprod) # 累積積の平方根
