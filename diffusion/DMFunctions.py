@@ -1,7 +1,7 @@
 """ Functions.py """
 #@title Functions
 
-# xxx
+# ###
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,10 +21,20 @@ class DMFunctions():
             self.betas = scheduler
         
         self.timesteps = timesteps #300 # 1000
+
+        # alphasの定義
         self.alphas = 1. - self.betas
         self.alphas_cumprod = torch.cumprod(self.alphas, axis=0) # 累積積
+        self.alphas_cumprod_prev = F.pad(self.alphas_cumprod[:-1], (1, 0), value=1.0)
+        self.sqrt_recip_alphas = torch.sqrt(1.0 / alphas)
+
+        # 拡散プロセス q(x_t | x_{t-1})等の計算
         self.sqrt_alphas_cumprod = torch.sqrt(self.alphas_cumprod) # 累積積の平方根
         self.sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - self.alphas_cumprod) # 累積積の平方根の補数
+
+        # 事後確率 q(x_{t-1} | x_t, x_0)の計算
+        posterior_variance = self.betas * (1. - self.alphas_cumprod_prev) / (1. - self.alphas_cumprod)
+
         self.noise_list = []
 
     def test(self):
