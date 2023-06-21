@@ -145,11 +145,12 @@ class DMFunctions():
         return arr
 
     # @title サンプリングの定義
-    def q_sample(self, x_start, t, mode=None):
+    def q_sample(self, x_start, t, mode=None, noise=None):
         """ mode:確認モードの種類 """
+        if noise is None:
+            noise = torch.randn_like(x_start)
 
         t = torch.tensor([t])
-        noise = torch.randn_like(x_start)
 
         # 元画像の強さ
         sqrt_alphas_cumprod_t = self.extract(self.sqrt_alphas_cumprod, t, x_start.shape)
