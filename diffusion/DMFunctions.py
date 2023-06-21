@@ -33,7 +33,7 @@ class DMFunctions():
         self.sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - self.alphas_cumprod) # 累積積の平方根の補数
 
         # 事後確率 q(x_{t-1} | x_t, x_0)の計算
-        posterior_variance = self.betas * (1. - self.alphas_cumprod_prev) / (1. - self.alphas_cumprod)
+        self.posterior_variance = self.betas * (1. - self.alphas_cumprod_prev) / (1. - self.alphas_cumprod)
 
         self.noise_list = []
 
