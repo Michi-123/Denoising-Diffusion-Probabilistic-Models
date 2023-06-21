@@ -150,8 +150,6 @@ class DMFunctions():
         if noise is None:
             noise = torch.randn_like(x_start)
 
-        t = torch.tensor([t])
-
         # 元画像の強さ
         sqrt_alphas_cumprod_t = self.extract(self.sqrt_alphas_cumprod, t, x_start.shape)
 
