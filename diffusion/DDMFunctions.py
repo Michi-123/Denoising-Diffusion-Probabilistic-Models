@@ -60,7 +60,7 @@ class DDMFunctions():
     # @title 画像の表示の定義
     def plot(self, x_noisy, timestep=None):
         noisy_image = self.reverse_transform(x_noisy)
-        if timestep:
+        if timestep is not None:
             text = "Step:" + str(timestep)
             plt.text(0, 0, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
         plt.axis('off')
