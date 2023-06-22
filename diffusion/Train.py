@@ -11,7 +11,7 @@ import numpy as np
 from diffusion.DMFunctions import DMFunctions #Githubで変更
 
 class Train():
-    def __init__(self, model, image_size, channels, timesteps, dataset_name, device, results_folder="./"):
+    def __init__(self, model, image_size, channels, timesteps, dataset_name, device):
         self.model = model
         self.image_size = image_size
         self.optimizer = Adam(self.model.parameters(), lr=1e-3)
@@ -28,7 +28,15 @@ class Train():
                 transforms.ToTensor(),
                 transforms.Lambda(lambda t: (t * 2) - 1)
         ])
-    
+
+        self.make_results_folder()
+
+    def make_results_folder(self):
+        from pathlib import Path
+        results_folder = Path("./results")
+        results_folder.mkdir(exist_ok = True)
+        self.results_folder = './results'
+            
     def transforms(self, examples):
         examples["pixel_values"] = [self.transform(image.convert("L")) for image in examples["image"]]
         del examples["image"]
