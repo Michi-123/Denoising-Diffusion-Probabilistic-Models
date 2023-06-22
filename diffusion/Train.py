@@ -10,9 +10,8 @@ from datasets import load_dataset
 from diffusion.DMFunctions import DMFunctions #Githubで変更
 
 class Train():
-    def __init__(self, model, image_size, channels, timesteps, dataset_name, results_folder, device):
+    def __init__(self, model, image_size, channels, timesteps, dataset_name, device):
         self.model = model
-        self.results_folder = results_folder
         self.image_size = image_size
         self.optimizer = Adam(self.model.parameters(), lr=1e-3)
         self.dataset = load_dataset(dataset_name)
@@ -69,4 +68,4 @@ class Train():
                         all_images_list_tensor = [torch.tensor(arr) for arr in np.array(all_images_list)]
                         all_images = torch.cat(all_images_list_tensor, dim=0)
                         all_images = (all_images + 1) * 0.5
-                        save_image(all_images, str(self.results_folder / f'sample-{milestone}.png'), nrow = 6)
+                        save_image(all_images, str(f'sample-{milestone}.png'), nrow = 6)
