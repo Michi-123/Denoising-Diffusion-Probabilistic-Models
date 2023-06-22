@@ -61,20 +61,12 @@ class Train():
                 self.optimizer.step()
 
                 # save generated images
-                if step != 0 and step % save_and_sample_every == 0:
-                    milestone = step // save_and_sample_every
-                    batches = self.dm.num_to_groups(4, batch_size)
-                    all_images_list = list(map(lambda n: self.dm.sample(self.model, image_size, self.image_size, batch_size=n, channels=self.channels), batches))
-                    all_images = torch.cat(all_images_list, dim=0)
-                    all_images = (all_images + 1) * 0.5
-                    save_image(all_images, str(self.results_folder / f'sample-{milestone}.png'), nrow = 6)
-
-
-    # def transforms(self, examples):
-        # 画像を指定のサイズに切り取って、値域を0-255から -1.0 - +1.0 に変換
-        # transform = Compose([
-        #     Resize(self.image_size),
-        #     CenterCrop(self.image_size),
-        #     ToTensor(),
-        #     Lambda(lambda t: (t * 2) - 1),
-        # ])
+                if False:
+                    if step != 0 and step % save_and_sample_every == 0:
+                        milestone = step // save_and_sample_every
+                        batches = self.dm.num_to_groups(4, batch_size)
+                        all_images_list = list(map(lambda n: self.dm.sample(self.model, image_size, self.image_size, batch_size=n, channels=self.channels), batches))
+                        all_images_list_tensor = [torch.tensor(arr) for arr in np.array(all_images_list)]
+                        all_images = torch.cat(all_images_list_tensor, dim=0)
+                        all_images = (all_images + 1) * 0.5
+                        save_image(all_images, str(self.results_folder / f'sample-{milestone}.png'), nrow = 6)
