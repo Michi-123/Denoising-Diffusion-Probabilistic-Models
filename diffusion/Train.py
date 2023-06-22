@@ -8,7 +8,7 @@ from torch.optim import Adam
 from datasets import load_dataset
 import numpy as np
 
-from diffusion.DMFunctions import DMFunctions #Githubで変更
+from diffusion.DDMFunctions import DDMFunctions #Githubで変更
 
 class Train():
     def __init__(self, model, image_size, channels, timesteps, dataset_name, schedule_type, device):
@@ -18,7 +18,7 @@ class Train():
         self.device = device
         self.model = model
 
-        self.dm = DMFunctions(timesteps, schedule_type)
+        self.dm = DDMFunctions(timesteps, schedule_type)
         self.dataset = load_dataset(dataset_name)
         self.optimizer = Adam(self.model.parameters(), lr=1e-3)
         self.results_folder = self.make_results_folder()
