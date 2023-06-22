@@ -6,15 +6,16 @@ from torchvision import transforms
 from torch.optim import Adam
 from datasets import load_dataset
 
-from diffusion.DMFunctions import DMFunctions as dm #Githubで変更
+from diffusion.DMFunctions import DMFunctions #Githubで変更
 
 class Train():
-    def __init__(self, model, image_size, dataset_name, results_folder):
+    def __init__(self, model, image_size, timesteps, dataset_name, results_folder):
         self.model = model
         self.results_folder = results_folder
         self.image_size = image_size
         self.optimizer = Adam(self.model.parameters(), lr=1e-3)
         self.dataset = load_dataset(dataset_name)
+        self.dm = DMFunctions(timesteps)
 
 
     def transforms(self, examples):
