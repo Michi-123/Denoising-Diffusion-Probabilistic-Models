@@ -11,7 +11,7 @@ import torch.nn.functional as F
 from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
 from diffusion.Scheduler import Scheduler
 
-class DMFunctions():
+class DDMFunctions():
     def __init__(self, timesteps, schedule_type):
         
         scheduler = Scheduler(timesteps)
@@ -19,10 +19,10 @@ class DMFunctions():
         if schedule_type == 'linear':
             # デフォルトは線形スケジュール
             # self.betas = torch.linspace(0.0001, 0.02, timesteps)
-            self.betas = scheduler.linear_beta_schedule(timesteps)
+            self.betas = scheduler.linear_beta_schedule()
             
         elif schedule_type == 'cosine':
-            self.betas = scheduler.cosine_beta_schedule(timesteps)
+            self.betas = scheduler.cosine_beta_schedule()
             
         else:
             pass
