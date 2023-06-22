@@ -25,8 +25,8 @@ class Train():
 
         return examples
 
-    def train(self, epochs, save_and_sample_every=10, ):
-        transformed_dataset = self.dataset.with_transform(transforms).remove_columns("label")
+    def train(self, epochs, save_and_sample_every=10, batch_size=128):
+        transformed_dataset = self.dataset.with_transform(self.transforms).remove_columns("label")
 
         # create dataloader
         dataloader = DataLoader(transformed_dataset["train"], batch_size=batch_size, shuffle=True)
