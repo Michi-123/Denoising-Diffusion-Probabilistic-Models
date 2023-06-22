@@ -11,16 +11,16 @@ import numpy as np
 from diffusion.DMFunctions import DMFunctions #Githubで変更
 
 class Train():
-    def __init__(self, model, image_size, channels, timesteps, dataset_name, device):
-        self.model = model
+    def __init__(self, image_size, channels, timesteps, dataset_name, device):
         self.image_size = image_size
-        self.optimizer = Adam(self.model.parameters(), lr=1e-3)
-        self.dataset = load_dataset(dataset_name)
-        self.dm = DMFunctions(timesteps)
-        self.device = device
-        self.timesteps = timesteps
         self.channels = channels
-        self.results_folder = results_folder
+        self.timesteps = timesteps
+        self.device = device
+
+        self.dm = DMFunctions(timesteps)
+        self.dataset = load_dataset(dataset_name)
+        self.optimizer = Adam(self.model.parameters(), lr=1e-3)
+        self.results_folder = self.make_results_folder()
 
         # define image transformations (e.g. using torchvision)
         self.transform = Compose([
@@ -29,13 +29,12 @@ class Train():
                 transforms.Lambda(lambda t: (t * 2) - 1)
         ])
 
-        self.make_results_folder()
 
     def make_results_folder(self):
         from pathlib import Path
         results_folder = Path("./results")
         results_folder.mkdir(exist_ok = True)
-        self.results_folder = './results'
+        return results_folder
             
     def transforms(self, examples):
         examples["pixel_values"] = [self.transform(image.convert("L")) for image in examples["image"]]
