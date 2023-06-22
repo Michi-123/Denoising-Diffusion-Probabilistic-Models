@@ -6,6 +6,7 @@ from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, Center
 from torchvision import transforms
 from torch.optim import Adam
 from datasets import load_dataset
+import numpy as np
 
 from diffusion.DMFunctions import DMFunctions #Githubで変更
 
