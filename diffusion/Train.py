@@ -45,7 +45,7 @@ class Train():
 
         return examples
 
-    def train(self, epochs, save_and_sample_every=100, batch_size=128):
+    def train(self, epochs, save_and_sample_every=1000, batch_size=128):
         transformed_dataset = self.dataset.with_transform(self.transforms).remove_columns("label")
 
         # create dataloader
