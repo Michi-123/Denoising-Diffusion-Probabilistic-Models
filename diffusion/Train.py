@@ -10,7 +10,7 @@ from datasets import load_dataset
 from diffusion.DMFunctions import DMFunctions #Githubで変更
 
 class Train():
-    def __init__(self, model, image_size, channels, timesteps, dataset_name, device, results_folder="result"):
+    def __init__(self, model, image_size, channels, timesteps, dataset_name, device, results_folder="./"):
         self.model = model
         self.image_size = image_size
         self.optimizer = Adam(self.model.parameters(), lr=1e-3)
