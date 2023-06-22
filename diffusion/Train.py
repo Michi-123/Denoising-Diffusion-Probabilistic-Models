@@ -9,13 +9,14 @@ from datasets import load_dataset
 from diffusion.DMFunctions import DMFunctions #Githubで変更
 
 class Train():
-    def __init__(self, model, image_size, timesteps, dataset_name, results_folder):
+    def __init__(self, model, image_size, timesteps, dataset_name, results_folder, device):
         self.model = model
         self.results_folder = results_folder
         self.image_size = image_size
         self.optimizer = Adam(self.model.parameters(), lr=1e-3)
         self.dataset = load_dataset(dataset_name)
         self.dm = DMFunctions(timesteps)
+        self.device = device
 
         # define image transformations (e.g. using torchvision)
         self.transform = Compose([
@@ -43,10 +44,10 @@ class Train():
                 self.optimizer.zero_grad()
 
                 batch_size = batch["pixel_values"].shape[0]
-                batch = batch["pixel_values"].to(device)
+                batch = batch["pixel_values"].to(self.device)
 
                 # Algorithm 1 line 3: sample t uniformally for every example in the batch
-                t = torch.randint(0, timesteps, (batch_size,), device=device).long()
+                t = torch.randint(0, timesteps, (batch_size,), device=self.device).long()
 
                 loss = dm.p_losses(self.model, batch, t, loss_type="huber")
 
