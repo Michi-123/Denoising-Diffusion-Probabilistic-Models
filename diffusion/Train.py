@@ -51,7 +51,7 @@ class Train():
                 # Algorithm 1 line 3: sample t uniformally for every example in the batch
                 t = torch.randint(0, self.timesteps, (batch_size,), device=self.device).long()
 
-                loss = dm.p_losses(self.model, batch, t, loss_type="huber")
+                loss = self.dm.p_losses(self.model, batch, t, loss_type="huber")
 
                 if step % 100 == 0:
                     print("Loss:", loss.item())
@@ -62,8 +62,8 @@ class Train():
                 # save generated images
                 if step != 0 and step % save_and_sample_every == 0:
                     milestone = step // save_and_sample_every
-                    batches = dm.num_to_groups(4, batch_size)
-                    all_images_list = list(map(lambda n: dm.sample(self.model, batch_size=n, channels=channels), batches))
+                    batches = self.dm.num_to_groups(4, batch_size)
+                    all_images_list = list(map(lambda n: self.dm.sample(self.model, batch_size=n, channels=channels), batches))
                     all_images = torch.cat(all_images_list, dim=0)
                     all_images = (all_images + 1) * 0.5
                     save_image(all_images, str(self.results_folder / f'sample-{milestone}.png'), nrow = 6)
