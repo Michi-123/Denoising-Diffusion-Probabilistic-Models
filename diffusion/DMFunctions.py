@@ -9,16 +9,23 @@ from tqdm.auto import tqdm
 import torch
 import torch.nn.functional as F
 from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
+from diffusion.Scheduler import Scheduler
 
 class DMFunctions():
-    def __init__(self, timesteps=1, scheduler=None):
-
+    def __init__(self, timesteps, schedule_type):
+        
+        scheduler = Scheduler(timesteps)
         # βスケジュールの設定
-        if scheduler == None:
+        if schedule_type == 'linear':
             # デフォルトは線形スケジュール
-            self.betas = torch.linspace(0.0001, 0.02, timesteps)
+            # self.betas = torch.linspace(0.0001, 0.02, timesteps)
+            self.betas = scheduler.linear_beta_schedule(timesteps)
+            
+        elif schedule_type == 'cosine':
+            self.betas = scheduler.cosine_beta_schedule(timesteps)
+            
         else:
-            self.betas = scheduler
+            pass
         
         self.timesteps = timesteps #300 # 1000
 
