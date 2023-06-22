@@ -189,6 +189,7 @@ class Unet(nn.Module):
         dim,
         init_dim=None,
         out_dim=None,
+        # ダウンサンプルのチャネルサイズの倍率
         dim_mults=(1, 2, 4), # 128x128 (1, 2, 4, 8)
         channels=3,
         self_condition=False,
