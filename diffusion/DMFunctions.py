@@ -1,7 +1,7 @@
 """ Functions.py """
 #@title Functions
 
-# ###
+# transform_
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -36,11 +36,6 @@ class DMFunctions():
         self.posterior_variance = self.betas * (1. - self.alphas_cumprod_prev) / (1. - self.alphas_cumprod)
 
         self.noise_list = []
-
-    def test(self):
-        print('Test2')
-
-
 
     def extract(self, a, t, x_shape):
         batch_size = t.shape[0]
@@ -83,7 +78,6 @@ class DMFunctions():
 
         return loss
 
-
     @torch.no_grad()
     def p_sample(self, model, x, t, t_index):
         betas_t = self.extract(self.betas, t, x.shape)
@@ -106,7 +100,6 @@ class DMFunctions():
             # Algorithm 2 line 4:
             return model_mean + torch.sqrt(posterior_variance_t) * noise
 
-
     # Algorithm 2 but save all images:
     @torch.no_grad()
     def p_sample_loop(self, model, shape):
@@ -122,11 +115,9 @@ class DMFunctions():
             imgs.append(img.cpu().numpy())
         return imgs
 
-
     @torch.no_grad()
     def sample(self, model, image_size, batch_size=16, channels=3):
         return self.p_sample_loop(model, shape=(batch_size, channels, image_size, image_size))
-
 
     def num_to_groups(self, num, divisor):
         groups = num // divisor
@@ -136,7 +127,6 @@ class DMFunctions():
             arr.append(remainder)
         return arr
 
-
     def exists(self, x):
         return x is not None
 
@@ -144,7 +134,6 @@ class DMFunctions():
         if self.exists(val):
             return val
         return d() if self.isfunction(d) else d
-
 
     def num_to_groups(self, num, divisor):
         groups = num // divisor
@@ -182,19 +171,21 @@ class DMFunctions():
 
         return q
 
+    def test(self):
+        print('Test2')
 
-    # 画像を指定のサイズに切り取って、値域を0-255から -1.0 - +1.0 に変換
-    def transform_(self, image_size):
-        return Compose([
-            Resize(image_size),
-            CenterCrop(image_size),
-            ToTensor(),
-            Lambda(lambda t: (t * 2) - 1),
-        ])
+    # # 画像を指定のサイズに切り取って、値域を0-255から -1.0 - +1.0 に変換
+    # def transform_(self, image_size):
+    #     return Compose([
+    #         Resize(image_size),
+    #         CenterCrop(image_size),
+    #         ToTensor(),
+    #         Lambda(lambda t: (t * 2) - 1),
+    #     ])
 
 
-    def transforms(self, examples):
-       examples["pixel_values"] = [transform(image.convert("L")) for image in examples["image"]]
-       del examples["image"]
+    # def transforms(self, examples):
+    #    examples["pixel_values"] = [transform(image.convert("L")) for image in examples["image"]]
+    #    del examples["image"]
     
-       return examples
+    #    return examples
