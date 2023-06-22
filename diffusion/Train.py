@@ -3,6 +3,7 @@ from torchvision.utils import save_image
 from torch.utils.data import DataLoader
 from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
 from torchvision import transforms
+from torch.optim import Adam
 
 from diffusion.DMFunctions import DMFunctions as dm #Githubで変更
 
