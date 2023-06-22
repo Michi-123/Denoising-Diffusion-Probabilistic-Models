@@ -18,6 +18,7 @@ class Train():
         self.dataset = load_dataset(dataset_name)
         self.dm = DMFunctions(timesteps)
         self.device = device
+        self.timesteps = timesteps
 
         # define image transformations (e.g. using torchvision)
         self.transform = Compose([
@@ -48,7 +49,7 @@ class Train():
                 batch = batch["pixel_values"].to(self.device)
 
                 # Algorithm 1 line 3: sample t uniformally for every example in the batch
-                t = torch.randint(0, timesteps, (batch_size,), device=self.device).long()
+                t = torch.randint(0, self.timesteps, (batch_size,), device=self.device).long()
 
                 loss = dm.p_losses(self.model, batch, t, loss_type="huber")
 
