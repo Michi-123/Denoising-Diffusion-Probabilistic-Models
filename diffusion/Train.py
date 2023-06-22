@@ -10,7 +10,7 @@ from datasets import load_dataset
 from diffusion.DMFunctions import DMFunctions #Githubで変更
 
 class Train():
-    def __init__(self, model, image_size, timesteps, dataset_name, results_folder, device):
+    def __init__(self, model, image_size, channels, timesteps, dataset_name, results_folder, device):
         self.model = model
         self.results_folder = results_folder
         self.image_size = image_size
@@ -19,6 +19,7 @@ class Train():
         self.dm = DMFunctions(timesteps)
         self.device = device
         self.timesteps = timesteps
+        self.channels = channels
 
         # define image transformations (e.g. using torchvision)
         self.transform = Compose([
@@ -63,7 +64,7 @@ class Train():
                 if step != 0 and step % save_and_sample_every == 0:
                     milestone = step // save_and_sample_every
                     batches = self.dm.num_to_groups(4, batch_size)
-                    all_images_list = list(map(lambda n: self.dm.sample(self.model, batch_size=n, channels=channels), batches))
+                    all_images_list = list(map(lambda n: self.dm.sample(self.model, batch_size=n, channels=self.channels), batches))
                     all_images = torch.cat(all_images_list, dim=0)
                     all_images = (all_images + 1) * 0.5
                     save_image(all_images, str(self.results_folder / f'sample-{milestone}.png'), nrow = 6)
