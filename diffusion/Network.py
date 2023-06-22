@@ -12,7 +12,6 @@ import torch
 from torch import nn, einsum
 import torch.nn.functional as F
 
-# from .DMFunctions import DMFunctions
 
 def exists(x):
     return x is not None
