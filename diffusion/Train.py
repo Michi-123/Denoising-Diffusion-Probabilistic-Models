@@ -11,11 +11,12 @@ import numpy as np
 from diffusion.DMFunctions import DMFunctions #Githubで変更
 
 class Train():
-    def __init__(self, image_size, channels, timesteps, dataset_name, device):
+    def __init__(self, model, image_size, channels, timesteps, dataset_name, device):
         self.image_size = image_size
         self.channels = channels
         self.timesteps = timesteps
         self.device = device
+        self.model = model
 
         self.dm = DMFunctions(timesteps)
         self.dataset = load_dataset(dataset_name)
