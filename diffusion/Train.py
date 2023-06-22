@@ -35,7 +35,7 @@ class Train():
 
         return examples
 
-    def train(self, epochs, save_and_sample_every=10, batch_size=128):
+    def train(self, epochs, save_and_sample_every=100, batch_size=128):
         transformed_dataset = self.dataset.with_transform(self.transforms).remove_columns("label")
 
         # create dataloader
@@ -60,12 +60,11 @@ class Train():
                 self.optimizer.step()
 
                 # save generated images
-                if False:
-                    if step != 0 and step % save_and_sample_every == 0:
-                        milestone = step // save_and_sample_every
-                        batches = self.dm.num_to_groups(4, batch_size)
-                        all_images_list = list(map(lambda n: self.dm.sample(self.model, image_size, self.image_size, batch_size=n, channels=self.channels), batches))
-                        all_images_list_tensor = [torch.tensor(arr) for arr in np.array(all_images_list)]
-                        all_images = torch.cat(all_images_list_tensor, dim=0)
-                        all_images = (all_images + 1) * 0.5
-                        save_image(all_images, str(f'sample-{milestone}.png'), nrow = 6)
+                if step != 0 and step % save_and_sample_every == 0:
+                    milestone = step // save_and_sample_every
+                    batches = self.dm.num_to_groups(4, batch_size)
+                    all_images_list = list(map(lambda n: self.dm.sample(self.model, image_size, self.image_size, batch_size=n, channels=self.channels), batches))
+                    all_images_list_tensor = [torch.tensor(arr) for arr in np.array(all_images_list)]
+                    all_images = torch.cat(all_images_list_tensor, dim=0)
+                    all_images = (all_images + 1) * 0.5
+                    save_image(all_images, str(f'sample-{milestone}.png'), nrow = 6)
