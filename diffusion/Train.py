@@ -17,9 +17,15 @@ class Train():
         self.dataset = load_dataset(dataset_name)
         self.dm = DMFunctions(timesteps)
 
-
+        # define image transformations (e.g. using torchvision)
+        self.transform = Compose([
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Lambda(lambda t: (t * 2) - 1)
+        ])
+    
     def transforms(self, examples):
-        examples["pixel_values"] = [transform(image.convert("L")) for image in examples["image"]]
+        examples["pixel_values"] = [self.transform(image.convert("L")) for image in examples["image"]]
         del examples["image"]
 
         return examples
