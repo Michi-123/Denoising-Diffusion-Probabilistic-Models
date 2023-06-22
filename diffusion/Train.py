@@ -4,15 +4,17 @@ from torch.utils.data import DataLoader
 from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
 from torchvision import transforms
 from torch.optim import Adam
+from datasets import load_dataset
 
 from diffusion.DMFunctions import DMFunctions as dm #Githubで変更
 
 class Train():
-    def __init__(self, model, image_size, results_folder):
+    def __init__(self, model, image_size, dataset_name, results_folder):
         self.model = model
         self.results_folder = results_folder
         self.image_size = image_size
         self.optimizer = Adam(self.model.parameters(), lr=1e-3)
+        self.dataset = load_dataset(dataset_name)
 
 
     def transforms(self, examples):
@@ -24,7 +26,7 @@ class Train():
         return examples
 
     def train(self, epochs, save_and_sample_every=10, ):
-        transformed_dataset = dataset.with_transform(transforms).remove_columns("label")
+        transformed_dataset = self.dataset.with_transform(transforms).remove_columns("label")
 
         # create dataloader
         dataloader = DataLoader(transformed_dataset["train"], batch_size=batch_size, shuffle=True)
