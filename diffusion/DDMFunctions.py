@@ -181,18 +181,20 @@ class DDMFunctions():
     def test(self):
         print('Test2')
 
-    # # 画像を指定のサイズに切り取って、値域を0-255から -1.0 - +1.0 に変換
-    # def transform_(self, image_size):
-    #     return Compose([
-    #         Resize(image_size),
-    #         CenterCrop(image_size),
-    #         ToTensor(),
-    #         Lambda(lambda t: (t * 2) - 1),
-    #     ])
-
 
     def transforms(self, examples):
        examples["pixel_values"] = [transform(image.convert("L")) for image in examples["image"]]
        del examples["image"]
     
        return examples
+
+    # 教材確認用
+    # 画像を指定のサイズに切り取って、値域を0-255 から -1.0 - +1.0 に変換
+    def transform_(self, image_size):
+        return Compose([
+            Resize(image_size),
+            CenterCrop(image_size),
+            ToTensor(),
+            Lambda(lambda t: (t * 2) - 1),
+        ])
+
