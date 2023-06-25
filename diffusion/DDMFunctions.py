@@ -24,6 +24,12 @@ class DDMFunctions():
         elif schedule_type == 'cosine':
             self.betas = scheduler.cosine_beta_schedule()
             
+        elif schedule_type == 'quadratic':
+            self.betas = scheduler.quadratic_beta_schedule()
+
+        elif schedule_type == 'sigmoid':
+            self.betas = scheduler.sigmoid_beta_schedule()
+            
         else:
             pass
         
