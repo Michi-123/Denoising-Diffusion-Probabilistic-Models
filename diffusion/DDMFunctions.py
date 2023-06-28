@@ -51,6 +51,9 @@ class DDMFunctions():
         self.noise_list = []
 
     def extract(self, a, t, x_shape):
+        """
+        バッチのインデックスに対して適切なtインデックスを抽出します。
+        """
         batch_size = t.shape[0]
         out = a.gather(-1, t.cpu())
         return out.reshape(batch_size, *((1,) * (len(x_shape) - 1))).to(t.device)
