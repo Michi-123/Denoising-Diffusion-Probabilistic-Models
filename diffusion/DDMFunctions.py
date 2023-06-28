@@ -197,9 +197,11 @@ class DDMFunctions():
     
        return examples
 
-    # 教材確認用
-    # 画像を指定のサイズに切り取って、値域を0-255 から -1.0 - +1.0 に変換
     def transform_(self, image_size):
+        """
+        教材確認用
+        画像を指定のサイズに切り取って、値域を0-255 から -1.0 - +1.0 に変換
+        """
         return Compose([
             Resize(image_size),
             CenterCrop(image_size),
