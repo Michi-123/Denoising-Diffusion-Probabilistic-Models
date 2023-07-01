@@ -70,7 +70,7 @@ class DDMFunctions():
     def plot(self, x_noisy, timestep=None):
         noisy_image = self.reverse_transform(x_noisy)
         if timestep is not None:
-            text = "Step:" + str(timestep)
+            text = "Step:" + str(timestep + 1)
             plt.text(0, 0, text, fontdict=None, bbox=dict(facecolor='white', alpha=1))
         plt.axis('off')
         plt.imshow(noisy_image)
